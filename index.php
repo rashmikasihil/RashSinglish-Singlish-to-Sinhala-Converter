@@ -1,3 +1,28 @@
+<?php 
+session_start();
+
+// Database connection
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$db = 'rash_singlish';
+
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$conn->set_charset("utf8mb4");
+
+// Trial system
+if(!isset($_SESSION['trial_count'])) {
+    $_SESSION['trial_count'] = 0;
+}
+
+// Reset trials for logged in users
+if(isset($_SESSION['user_id'])) {
+    $_SESSION['trial_count'] = 0;
+}
+?>
 <?php include 'config/database.php'; include 'includes/header.php'; include 'includes/navbar.php'; ?>
 
 <!-- Hero Section with Animated Background -->

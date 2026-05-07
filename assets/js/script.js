@@ -158,7 +158,9 @@ async function convertText() {
     
     if(!input || !output) return;
     
-    if(!input.value.trim()) {
+    let text = input.value.trim();
+    
+    if(!text) {
         output.innerHTML = '<span class="placeholder-text"><i class="fas fa-exclamation-triangle"></i> කරුණාකර යමක් ටයිප් කරන්න</span>';
         updateCounters('');
         return;
@@ -170,21 +172,44 @@ async function convertText() {
         let res = await fetch('api/convert.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: 'singlish=' + encodeURIComponent(input.value)
+            body: 'singlish=' + encodeURIComponent(text)
         });
+        
         if(res.ok) {
             let data = await res.json();
             output.innerHTML = data.sinhala;
+            
+            // --- TRIAL SYSTEM: Increment trial count after successful conversion ---
+            let trialRes = await fetch('api/trial.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            });
+            let trialData = await trialRes.json();
+            
+            // Update trial warning display
+            let trialCountElement = document.querySelector('.trial-count');
+            if(trialCountElement && trialData.trials_left !== undefined) {
+                trialCountElement.innerText = trialData.trials_left;
+            }
+            
+            // Check if trials finished and user not logged in
+            if(trialData.trials_left === 0 && !trialData.is_logged_in) {
+                output.innerHTML = '<span class="placeholder-text"><i class="fas fa-exclamation-triangle"></i> ඔබගේ නොමිලේ අත්හදා බැලීම් 3ම අවසන්! පිවිසෙන්න...</span>';
+                setTimeout(() => {
+                    window.location.href = 'login.php';
+                }, 2000);
+            }
         } else {
             throw new Error('API failed');
         }
     } catch(e) {
-        let sinhalaText = singlishToSinhala(input.value);
+        // Fallback to local conversion
+        let sinhalaText = singlishToSinhala(text);
         output.innerHTML = sinhalaText;
     }
     
     if(loading) loading.style.display = 'none';
-    updateCounters(input.value);
+    updateCounters(text);
 }
 
 // ========== UPDATE CHARACTER & WORD COUNTERS ==========
