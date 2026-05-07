@@ -4,66 +4,153 @@ function toggleMenu() {
     if(navLinks) navLinks.classList.toggle('active');
 }
 
-// ========== SINGLISH TO SINHALA CONVERSION (Enhanced) ==========
-// Extended mapping dictionary
+// ========== SINGLISH TO SINHALA CONVERSION ==========
+// Complete mapping dictionary (matches convert.php exactly)
 const sinhalaMap = {
-    // Basic vowels
-    'aa': 'ආ', 'ae': 'ඇ', 'aee': 'ඈ', 'ii': 'ඊ', 'uu': 'ඌ', 'ee': 'ඒ', 'oo': 'ඕ',
-    'a': 'අ', 'i': 'ඉ', 'u': 'උ', 'e': 'එ', 'o': 'ඔ',
+    // ===== COMPLETE PHRASES =====
+    'rata dakwanna ayith waradak na': 'රට දක්වන්න ආයිත් වරදක් නෑ',
+    'mama sinhalen kiyanawa': 'මම සිංහලෙන් කියනවා',
+    'api sinhalen karanawa': 'අපි සිංහලෙන් කරනවා',
+    'ayubowan': 'ආයුබෝවන්',
+    'kohomada': 'කොහොමද',
+    'istuti': 'ඉස්තුති',
     
-    // Common words
-    'amma': 'අම්මා', 'appa': 'අප්පා', 'kohomada': 'කොහොමද', 'mama': 'මම',
-    'sinhalen': 'සිංහලෙන්', 'type': 'ටයිප්', 'karanawa': 'කරනවා',
-    'ayubowan': 'ආයුබෝවන්', 'istuti': 'ඉස්තුති', 'ban': 'බෑන්', 'hodai': 'හොඳයි',
-    'naha': 'නෑ', 'oyata': 'ඔයාට', 'mata': 'මට', 'api': 'අපි', 'oya': 'ඔයා',
+    // ===== COMMON WORDS =====
+    'amma': 'අම්මා', 'appa': 'අප්පා', 'nangi': 'නංගි', 'aiya': 'අයියා',
+    'akka': 'අක්කා', 'malli': 'මල්ලි', 'mama': 'මම', 'api': 'අපි',
+    'oya': 'ඔයා', 'oyata': 'ඔයාට', 'mata': 'මට', 'naha': 'නැහැ',
+    'hodai': 'හොඳයි', 'sinhalen': 'සිංහලෙන්', 'kiyanawa': 'කියනවා',
+    'karanawa': 'කරනවා', 'dakwanna': 'දක්වන්න', 'ayith': 'ආයිත්',
+    'waradak': 'වරදක්', 'rata': 'රට', 'na': 'නෑ',
     
-    // Consonants with vowels
-    'ka': 'ක', 'kā': 'කා', 'ki': 'කි', 'kī': 'කී', 'ku': 'කු', 'kū': 'කූ', 'ke': 'කෙ', 'kē': 'කේ', 'ko': 'කො', 'kō': 'කෝ',
-    'ga': 'ග', 'gā': 'ගා', 'gi': 'ගි', 'gī': 'ගී', 'gu': 'ගු', 'gū': 'ගූ', 'ge': 'ගෙ', 'gē': 'ගේ', 'go': 'ගො', 'gō': 'ගෝ',
-    'ca': 'ච', 'cā': 'චා', 'ci': 'චි', 'cī': 'චී', 'cu': 'චු', 'cū': 'චූ', 'ce': 'චෙ', 'cē': 'චේ', 'co': 'චො', 'cō': 'චෝ',
-    'ja': 'ජ', 'jā': 'ජා', 'ji': 'ජි', 'jī': 'ජී', 'ju': 'ජු', 'jū': 'ජූ', 'je': 'ජෙ', 'jē': 'ජේ', 'jo': 'ජො', 'jō': 'ජෝ',
-    'ta': 'ට', 'tā': 'ටා', 'ti': 'ටි', 'tī': 'ටී', 'tu': 'ටු', 'tū': 'ටූ', 'te': 'ටෙ', 'tē': 'ටේ', 'to': 'ටො', 'tō': 'ටෝ',
-    'da': 'ඩ', 'dā': 'ඩා', 'di': 'ඩි', 'dī': 'ඩී', 'du': 'ඩු', 'dū': 'ඩූ', 'de': 'ඩෙ', 'dē': 'ඩේ', 'do': 'ඩො', 'dō': 'ඩෝ',
-    'na': 'න', 'nā': 'නා', 'ni': 'නි', 'nī': 'නී', 'nu': 'නු', 'nū': 'නූ', 'ne': 'නෙ', 'nē': 'නේ', 'no': 'නො', 'nō': 'නෝ',
-    'pa': 'ප', 'pā': 'පා', 'pi': 'පි', 'pī': 'පී', 'pu': 'පු', 'pū': 'පූ', 'pe': 'පෙ', 'pē': 'පේ', 'po': 'පො', 'pō': 'පෝ',
-    'ba': 'බ', 'bā': 'බා', 'bi': 'බි', 'bī': 'බී', 'bu': 'බු', 'bū': 'බූ', 'be': 'බෙ', 'bē': 'බේ', 'bo': 'බො', 'bō': 'බෝ',
-    'ma': 'ම', 'mā': 'මා', 'mi': 'මි', 'mī': 'මී', 'mu': 'මු', 'mū': 'මූ', 'me': 'මෙ', 'mē': 'මේ', 'mo': 'මො', 'mō': 'මෝ',
-    'ya': 'ය', 'yā': 'යා', 'yi': 'යි', 'yī': 'යී', 'yu': 'යු', 'yū': 'යූ', 'ye': 'යෙ', 'yē': 'යේ', 'yo': 'යො', 'yō': 'යෝ',
-    'ra': 'ර', 'rā': 'රා', 'ri': 'රි', 'rī': 'රී', 'ru': 'රු', 'rū': 'රූ', 're': 'රෙ', 'rē': 'රේ', 'ro': 'රො', 'rō': 'රෝ',
-    'la': 'ල', 'lā': 'ලා', 'li': 'ලි', 'lī': 'ලී', 'lu': 'ලු', 'lū': 'ලූ', 'le': 'ලෙ', 'lē': 'ලේ', 'lo': 'ලො', 'lō': 'ලෝ',
-    'va': 'ව', 'vā': 'වා', 'vi': 'වි', 'vī': 'වී', 'vu': 'වු', 'vū': 'වූ', 've': 'වෙ', 'vē': 'වේ', 'vo': 'වො', 'vō': 'වෝ',
-    'sa': 'ස', 'sā': 'සා', 'si': 'සි', 'sī': 'සී', 'su': 'සු', 'sū': 'සූ', 'se': 'සෙ', 'sē': 'සේ', 'so': 'සො', 'sō': 'සෝ',
-    'ha': 'හ', 'hā': 'හා', 'hi': 'හි', 'hī': 'හී', 'hu': 'හු', 'hū': 'හූ', 'he': 'හෙ', 'hē': 'හේ', 'ho': 'හො', 'hō': 'හෝ',
-    'la': 'ල', 'lā': 'ලා', 'li': 'ලි', 'lī': 'ලී', 'lu': 'ලු', 'lū': 'ලූ', 'le': 'ලෙ', 'lē': 'ලේ', 'lo': 'ලො', 'lō': 'ලෝ',
+    // ===== KA SERIES (කාණ්ඩය) =====
+    'ka': 'ක', 'kaa': 'කා', 'kā': 'කා', 'kA': 'කැ', 'kAE': 'කෑ',
+    'ki': 'කි', 'kI': 'කී', 'kii': 'කී', 'ku': 'කු', 'kU': 'කූ', 'kuu': 'කූ',
+    'ke': 'කෙ', 'kE': 'කේ', 'kee': 'කේ', 'ko': 'කො', 'kO': 'කෝ', 'koo': 'කෝ',
+    'kau': 'කෞ', 'k': 'ක්',
     
-    // Special characters
-    'sha': 'ශ', 'shaa': 'ෂා', 'fa': 'ෆ', 'dna': 'ඥ', 'gna': 'ඤ',
+    // ===== GA SERIES (ගාණ්ඩය) =====
+    'ga': 'ග', 'gaa': 'ගා', 'gā': 'ගා', 'gA': 'ගැ', 'gAE': 'ගෑ',
+    'gi': 'ගි', 'gI': 'ගී', 'gii': 'ගී', 'gu': 'ගු', 'gU': 'ගූ', 'guu': 'ගූ',
+    'ge': 'ගෙ', 'gE': 'ගේ', 'gee': 'ගේ', 'go': 'ගො', 'gO': 'ගෝ', 'goo': 'ගෝ',
+    'gau': 'ගෞ', 'g': 'ග්',
     
-    // Punctuation and spaces
-    ' ': ' ', '.': '.', ',': ',', '?': '?', '!': '!', "'": "'", '"': '"', ';': ';', ':': ':'
+    // ===== CA SERIES (චාණ්ඩය) =====
+    'ca': 'ච', 'caa': 'චා', 'cā': 'චා', 'cA': 'චැ', 'cAE': 'චෑ',
+    'ci': 'චි', 'cI': 'චී', 'cii': 'චී', 'cu': 'චු', 'cU': 'චූ', 'cuu': 'චූ',
+    'ce': 'චෙ', 'cE': 'චේ', 'cee': 'චේ', 'co': 'චො', 'cO': 'චෝ', 'coo': 'චෝ',
+    'c': 'ච්',
+    
+    // ===== JA SERIES (ජාණ්ඩය) =====
+    'ja': 'ජ', 'jaa': 'ජා', 'jā': 'ජා', 'jA': 'ජැ', 'jAE': 'ජෑ',
+    'ji': 'ජි', 'jI': 'ජී', 'jii': 'ජී', 'ju': 'ජු', 'jU': 'ජූ', 'juu': 'ජූ',
+    'je': 'ජෙ', 'jE': 'ජේ', 'jee': 'ජේ', 'jo': 'ජො', 'jO': 'ජෝ', 'joo': 'ජෝ',
+    'j': 'ජ්',
+    
+    // ===== TA SERIES (ටාණ්ඩය) =====
+    'ta': 'ට', 'taa': 'ටා', 'tā': 'ටා', 'tA': 'ටැ', 'tAE': 'ටෑ',
+    'ti': 'ටි', 'tI': 'ටී', 'tii': 'ටී', 'tu': 'ටු', 'tU': 'ටූ', 'tuu': 'ටූ',
+    'te': 'ටෙ', 'tE': 'ටේ', 'tee': 'ටේ', 'to': 'ටො', 'tO': 'ටෝ', 'too': 'ටෝ',
+    't': 'ට්',
+    
+    // ===== DA SERIES (ඩාණ්ඩය) =====
+    'da': 'ඩ', 'daa': 'ඩා', 'dā': 'ඩා', 'dA': 'ඩැ', 'dAE': 'ඩෑ',
+    'di': 'ඩි', 'dI': 'ඩී', 'dii': 'ඩී', 'du': 'ඩු', 'dU': 'ඩූ', 'duu': 'ඩූ',
+    'de': 'ඩෙ', 'dE': 'ඩේ', 'dee': 'ඩේ', 'do': 'ඩො', 'dO': 'ඩෝ', 'doo': 'ඩෝ',
+    'd': 'ඩ්',
+    
+    // ===== NA SERIES (නාණ්ඩය) =====
+    'na': 'න', 'naa': 'නා', 'nā': 'නා', 'nA': 'නැ', 'nAE': 'නෑ',
+    'ni': 'නි', 'nI': 'නී', 'nii': 'නී', 'nu': 'නු', 'nU': 'නූ', 'nuu': 'නූ',
+    'ne': 'නෙ', 'nE': 'නේ', 'nee': 'නේ', 'no': 'නො', 'nO': 'නෝ', 'noo': 'නෝ',
+    'n': 'න්',
+    
+    // ===== PA SERIES (පාණ්ඩය) =====
+    'pa': 'ප', 'paa': 'පා', 'pā': 'පා', 'pA': 'පැ', 'pAE': 'පෑ',
+    'pi': 'පි', 'pI': 'පී', 'pii': 'පී', 'pu': 'පු', 'pU': 'පූ', 'puu': 'පූ',
+    'pe': 'පෙ', 'pE': 'පේ', 'pee': 'පේ', 'po': 'පො', 'pO': 'පෝ', 'poo': 'පෝ',
+    'p': 'ප්',
+    
+    // ===== BA SERIES (බාණ්ඩය) =====
+    'ba': 'බ', 'baa': 'බා', 'bā': 'බා', 'bA': 'බැ', 'bAE': 'බෑ',
+    'bi': 'බි', 'bI': 'බී', 'bii': 'බී', 'bu': 'බු', 'bU': 'බූ', 'buu': 'බූ',
+    'be': 'බෙ', 'bE': 'බේ', 'bee': 'බේ', 'bo': 'බො', 'bO': 'බෝ', 'boo': 'බෝ',
+    'b': 'බ්',
+    
+    // ===== MA SERIES (මාණ්ඩය) =====
+    'ma': 'ම', 'maa': 'මා', 'mā': 'මා', 'mA': 'මැ', 'mAE': 'මෑ',
+    'mi': 'මි', 'mI': 'මී', 'mii': 'මී', 'mu': 'මු', 'mU': 'මූ', 'muu': 'මූ',
+    'me': 'මෙ', 'mE': 'මේ', 'mee': 'මේ', 'mo': 'මො', 'mO': 'මෝ', 'moo': 'මෝ',
+    'm': 'ම්',
+    
+    // ===== YA SERIES (යාණ්ඩය) =====
+    'ya': 'ය', 'yaa': 'යා', 'yā': 'යා', 'yA': 'යැ', 'yAE': 'යෑ',
+    'yi': 'යි', 'yI': 'යී', 'yii': 'යී', 'yu': 'යු', 'yU': 'යූ', 'yuu': 'යූ',
+    'ye': 'යෙ', 'yE': 'යේ', 'yee': 'යේ', 'yo': 'යො', 'yO': 'යෝ', 'yoo': 'යෝ',
+    'y': 'ය්',
+    
+    // ===== RA SERIES (රාණ්ඩය) =====
+    'ra': 'ර', 'raa': 'රා', 'rā': 'රා', 'rA': 'රැ', 'rAE': 'රෑ',
+    'ri': 'රි', 'rI': 'රී', 'rii': 'රී', 'ru': 'රු', 'rU': 'රූ', 'ruu': 'රූ',
+    're': 'රෙ', 'rE': 'රේ', 'ree': 'රේ', 'ro': 'රො', 'rO': 'රෝ', 'roo': 'රෝ',
+    'r': 'ර්',
+    
+    // ===== LA SERIES (ලාණ්ඩය) =====
+    'la': 'ල', 'laa': 'ලා', 'lā': 'ලා', 'lA': 'ලැ', 'lAE': 'ලෑ',
+    'li': 'ලි', 'lI': 'ලී', 'lii': 'ලී', 'lu': 'ලු', 'lU': 'ලූ', 'luu': 'ලූ',
+    'le': 'ලෙ', 'lE': 'ලේ', 'lee': 'ලේ', 'lo': 'ලො', 'lO': 'ලෝ', 'loo': 'ලෝ',
+    'l': 'ල්',
+    
+    // ===== VA SERIES (වාණ්ඩය) =====
+    'va': 'ව', 'vaa': 'වා', 'vā': 'වා', 'vA': 'වැ', 'vAE': 'වෑ',
+    'vi': 'වි', 'vI': 'වී', 'vii': 'වී', 'vu': 'වු', 'vU': 'වූ', 'vuu': 'වූ',
+    've': 'වෙ', 'vE': 'වේ', 'vee': 'වේ', 'vo': 'වො', 'vO': 'වෝ', 'voo': 'වෝ',
+    'v': 'ව්',
+    
+    // ===== SA SERIES (සාණ්ඩය) =====
+    'sa': 'ස', 'saa': 'සා', 'sā': 'සා', 'sA': 'සැ', 'sAE': 'සෑ',
+    'si': 'සි', 'sI': 'සී', 'sii': 'සී', 'su': 'සු', 'sU': 'සූ', 'suu': 'සූ',
+    'se': 'සෙ', 'sE': 'සේ', 'see': 'සේ', 'so': 'සො', 'sO': 'සෝ', 'soo': 'සෝ',
+    's': 'ස්',
+    
+    // ===== HA SERIES (හාණ්ඩය) =====
+    'ha': 'හ', 'haa': 'හා', 'hā': 'හා', 'hA': 'හැ', 'hAE': 'හෑ',
+    'hi': 'හි', 'hI': 'හී', 'hii': 'හී', 'hu': 'හු', 'hU': 'හූ', 'huu': 'හූ',
+    'he': 'හෙ', 'hE': 'හේ', 'hee': 'හේ', 'ho': 'හො', 'hO': 'හෝ', 'hoo': 'හෝ',
+    'h': 'හ්',
+    
+    // ===== SPECIAL CHARACTERS =====
+    'sha': 'ශ', 'shaa': 'ෂ', 'fa': 'ෆ', 'nya': 'ඤ', 'gna': 'ඥ',
+    'kya': 'ක්‍ය', 'kra': 'ක්‍ර', 'gya': 'ග්‍ය', 'gra': 'ග්‍ර',
+    'dnya': 'ඥ',
+    
+    // ===== VOWELS (ස්වර) =====
+    'a': 'අ', 'aa': 'ආ', 'ae': 'ඇ', 'aae': 'ඈ',
+    'i': 'ඉ', 'ii': 'ඊ', 'u': 'උ', 'uu': 'ඌ',
+    'e': 'එ', 'ee': 'ඒ', 'o': 'ඔ', 'oo': 'ඕ', 'ou': 'ඖ',
+    
+    // ===== PUNCTUATION & SPACES =====
+    ' ': ' ', '.': '.', ',': ',', '?': '?', '!': '!',
+    ';': ';', ':': ':', '"': '"', "'": "'", '(': '(',
+    ')': ')', '[': '[', ']': ']', '{': '{', '}': '}'
 };
 
 function singlishToSinhala(text) {
     if(!text) return '';
-    let lowerText = text.toLowerCase();
+    let result = text;
     
     // Sort by length (longest first) to avoid partial matches
     let sortedKeys = Object.keys(sinhalaMap).sort((a, b) => b.length - a.length);
     
     for(let eng of sortedKeys) {
         let regex = new RegExp(eng, 'gi');
-        lowerText = lowerText.replace(regex, sinhalaMap[eng]);
+        result = result.replace(regex, sinhalaMap[eng]);
     }
     
-    // Handle special patterns like "nna" -> "න්න"
-    lowerText = lowerText.replace(/nna/g, 'න්න');
-    lowerText = lowerText.replace(/ndha/g, 'න්ද');
-    lowerText = lowerText.replace(/nga/g, 'ංග');
-    
-    return lowerText;
+    return result;
 }
 
-// Main conversion function (async with API or local)
+// Main conversion function
 async function convertText() {
     let input = document.getElementById('singlishInput');
     let output = document.getElementById('sinhalaOutput');
@@ -79,7 +166,6 @@ async function convertText() {
     
     if(loading) loading.style.display = 'flex';
     
-    // Try API first, fallback to local
     try {
         let res = await fetch('api/convert.php', {
             method: 'POST',
@@ -93,15 +179,11 @@ async function convertText() {
             throw new Error('API failed');
         }
     } catch(e) {
-        // Fallback to local conversion
-        console.log('Using local conversion');
         let sinhalaText = singlishToSinhala(input.value);
         output.innerHTML = sinhalaText;
     }
     
     if(loading) loading.style.display = 'none';
-    
-    // Update counters
     updateCounters(input.value);
 }
 
@@ -199,7 +281,6 @@ function speakText() {
     
     if(text && text !== placeholder && text !== oldPlaceholder && text !== '') {
         if('speechSynthesis' in window) {
-            // Cancel any ongoing speech
             speechSynthesis.cancel();
             
             let utterance = new SpeechSynthesisUtterance(text);
@@ -207,13 +288,9 @@ function speakText() {
             utterance.rate = 0.9;
             utterance.pitch = 1;
             
-            // Try to get Sinhala voice
             let voices = speechSynthesis.getVoices();
             let sinhalaVoice = voices.find(voice => voice.lang.includes('si'));
             if(sinhalaVoice) utterance.voice = sinhalaVoice;
-            
-            utterance.onend = () => console.log('Speech finished');
-            utterance.onerror = (e) => console.error('Speech error:', e);
             
             speechSynthesis.speak(utterance);
             showToast('🔊 Speaking Sinhala text...', 'info');
@@ -259,10 +336,6 @@ function startVoiceTyping() {
             }
         };
         
-        recognition.onend = () => {
-            console.log('Voice recognition ended');
-        };
-        
         recognition.start();
     } else {
         showToast('❌ Voice typing not supported in this browser. Please use Chrome or Edge.', 'error');
@@ -281,11 +354,9 @@ function setExample(text) {
 
 // ========== TOAST NOTIFICATION SYSTEM ==========
 function showToast(message, type = 'info') {
-    // Remove existing toast
     let existingToast = document.querySelector('.custom-toast');
     if(existingToast) existingToast.remove();
     
-    // Create toast element
     let toast = document.createElement('div');
     toast.className = `custom-toast toast-${type}`;
     toast.innerHTML = `
@@ -293,10 +364,8 @@ function showToast(message, type = 'info') {
             <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'}"></i>
             <span>${message}</span>
         </div>
-        <div class="toast-progress"></div>
     `;
     
-    // Style the toast
     toast.style.cssText = `
         position: fixed;
         bottom: 30px;
@@ -316,7 +385,6 @@ function showToast(message, type = 'info') {
     
     document.body.appendChild(toast);
     
-    // Auto remove after 3 seconds
     setTimeout(() => {
         toast.style.animation = 'slideOutRight 0.3s ease';
         setTimeout(() => toast.remove(), 300);
@@ -327,24 +395,12 @@ function showToast(message, type = 'info') {
 const toastStyles = document.createElement('style');
 toastStyles.textContent = `
     @keyframes slideInRight {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
     }
     @keyframes slideOutRight {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(100%);
-            opacity: 0;
-        }
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
     }
 `;
 document.head.appendChild(toastStyles);
@@ -399,7 +455,6 @@ function toggleFaq(element) {
     let faqItem = element.closest('.faq-item');
     if(!faqItem) return;
     
-    // Close others (optional)
     let allFaqs = document.querySelectorAll('.faq-item');
     allFaqs.forEach(item => {
         if(item !== faqItem && item.classList.contains('active')) {
@@ -466,7 +521,6 @@ async function subscribeNewsletter(event) {
         showToast(data.message || '✅ Successfully subscribed!', 'success');
         emailInput.value = '';
     } catch(e) {
-        // Demo mode - just show success
         showToast('✅ Thank you for subscribing!', 'success');
         emailInput.value = '';
     }
@@ -569,7 +623,6 @@ function initLiveDemo() {
 
 // ========== INITIALIZE EVERYTHING ON PAGE LOAD ==========
 document.addEventListener('DOMContentLoaded', () => {
-    // Converter elements
     let textarea = document.getElementById('singlishInput');
     if(textarea) {
         textarea.addEventListener('input', (e) => {
@@ -580,24 +633,15 @@ document.addEventListener('DOMContentLoaded', () => {
         textarea.addEventListener('blur', stopTypingTimer);
     }
     
-    // Load history if on history page
     if(document.getElementById('historyList')) {
         loadHistory();
     }
     
-    // Load saved theme
     loadSavedTheme();
-    
-    // Initialize counters animation
     initCounters();
-    
-    // Initialize scroll reveal
     initScrollReveal();
-    
-    // Initialize live demo
     initLiveDemo();
     
-    // Add style for delete button
     const style = document.createElement('style');
     style.textContent = `
         .delete-btn {
@@ -629,7 +673,6 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(style);
     
-    // Add keyboard shortcut (Ctrl+Enter to convert)
     if(textarea) {
         textarea.addEventListener('keydown', (e) => {
             if(e.ctrlKey && e.key === 'Enter') {
