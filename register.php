@@ -1,4 +1,4 @@
-<?php include 'config/database.php'; session_start(); ?>
+<?php include 'config/database.php'; session_start(); include 'includes/header.php'; include 'includes/navbar.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -235,6 +235,7 @@
 </div>
 
 <?php
+
 if(isset($_POST['register'])) {
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -272,3 +273,4 @@ if(isset($_POST['register'])) {
 ?>
 </body>
 </html>
+<?php include 'includes/footer.php'; ?>

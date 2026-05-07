@@ -52,6 +52,7 @@ if(isset($_POST['login'])) {
     }
 }
 ?>
+<?php include 'config/database.php'; include 'includes/header.php'; include 'includes/navbar.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -264,3 +265,4 @@ if(isset($_POST['login'])) {
 </div>
 </body>
 </html>
+<?php include 'includes/footer.php'; ?>
